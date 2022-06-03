@@ -15,7 +15,7 @@ char db_sec[] = SECRET_DB_SEC;  // firebase secret to get access
 FirebaseData fbdo;
 
 // firebase endpoint
-String path = "/test";
+String path = "/";
 
 // led pin variable
 int led = 2;
@@ -60,7 +60,7 @@ void setup() {
 }
 
 void loop() {
-  Firebase.getBool(fbdo, path + "/led/status");
+  Firebase.getBool(fbdo, path + "led/status");
   bool status = fbdo.boolData();
   
   if (status == true) {
