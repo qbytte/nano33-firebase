@@ -60,6 +60,11 @@ void setup() {
 }
 
 void loop() {
+  handleLedStatus();
+  delay(1000);
+}
+
+void handleLedStatus() {
   Firebase.getBool(fbdo, path + "led/status");
   bool status = fbdo.boolData();
   
@@ -72,6 +77,4 @@ void loop() {
     Serial.println(status);
     digitalWrite(LED_BUILTIN, LOW);
   }
-  
-  delay(1000);
 }
