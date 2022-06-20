@@ -6,6 +6,12 @@
 // Firebase Arduino based on WiFiNINA - Version: Latest
 #include "Firebase_Arduino_WiFiNINA.h"
 
+// define sensor type and data pin
+#define DHTTYPE DHT11
+#define DHTPIN 2
+
+// led pin variable
+int led = 3;
 
 char ssid[] = SECRET_SSID;
 char pass[] = SECRET_PASS;
@@ -20,15 +26,8 @@ FirebaseData fbdo;
 // firebase endpoint
 String path = "/";
 
-// define sensor type and data pin
-#define DHTTYPE DHT11
-#define DHTPIN 2
-
 // initialize temp sensor
 DHT dht(DHTPIN, DHTTYPE);
-
-// led pin variable
-int led = 2;
 
 // time flag used for temperature readings
 int timeFlag = 0;
@@ -36,13 +35,16 @@ int timeFlag = 0;
 void setup() {
   // initialize pins
   pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(led, OUTPUT);
 
   // initialize temp sensor
   dht.begin();
   
   // initialize serial and wait for port to open:
   Serial.begin(9600);
-  while (!Serial);
+  
+  // wait for serial port, only dev environment!
+  // while (!Serial);
 
   // attempt to connect to Wi-Fi network:
   while (status != WL_CONNECTED) {
@@ -92,10 +94,12 @@ void handleLedStatus() {
     Serial.print("Firebase status: ");
     Serial.println(status);
     digitalWrite(LED_BUILTIN, HIGH);
+    digitalWrite(led, HIGH);
   } else {
     Serial.print("Firebase status: ");
     Serial.println(status);
     digitalWrite(LED_BUILTIN, LOW);
+    digitalWrite(led, LOW);
   }
 }
 
